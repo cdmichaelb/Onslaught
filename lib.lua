@@ -70,9 +70,10 @@ end
 OSAddon.lib.getRosterInfo = function()
     local roster = {}
     for i = 1, 40 do
-        local name, _, _, _, _, _, _, _, _, _, isML = GetRaidRosterInfo(i)
+        local name, _, _, _, playerClass, _, _, _, _, _, isML, _ = GetRaidRosterInfo(i)
+           -- name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML, combatRole
         if name then
-            roster[name] = { isMasterLooter = isML, name = name }
+            roster[name] = { class = playerClass, isMasterLooter = isML, name = name }
         end
     end
     return roster
