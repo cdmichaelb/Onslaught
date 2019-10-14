@@ -1,6 +1,4 @@
 local OS, OSAddon = ...
-OnslaughtAce = LibStub("AceAddon-3.0"):NewAddon("OnslaughtAce", "AceConsole-3.0")
-AceGUI = LibStub("AceGUI-3.0")
 
 local frame = CreateFrame("FRAME", "OSAddonMainFrame", UIParent)
 
