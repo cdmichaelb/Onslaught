@@ -1,0 +1,17 @@
+## Interface: 11302
+## Title: Onslaught
+## Author: Dw
+## Version: 1
+## SavedVariables: OnslaughtAddonGlobalDB
+## SavedVariablesPerCharacter: OnslaughtAddonCharDB
+## OptionalDeps: Ace3
+
+embeds.xml
+
+lib.lua
+
+Modules/LootAlerts/LootAlerts.lua
+Modules/LootManager/LootManager.lua
+Modules/SlashMenu/SlashMenu.lua
+
+main.lua
