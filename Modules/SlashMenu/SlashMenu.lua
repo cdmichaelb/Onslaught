@@ -13,7 +13,7 @@ local function makeFrame(name, excludeParent)
     local frame = CreateFrame("Frame", nil, UIParent)
     frame.anchor = CreateFrame("Frame", nil, frame)
     frame.anchor:SetPoint("TOPLEFT", 32, -16)
-    frame.anchor:SetSize(, 1)
+    frame.anchor:SetSize(width, 1)
     frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     frame.title:SetPoint("TOPLEFT", 16, -16)
     frame.title:SetText(format("%s |cff33eeff%s|r", addonName, name))
@@ -34,6 +34,7 @@ local function makeFrame(name, excludeParent)
     contentGroup.frame:Show()
     contentGroup:SetHeight(height)
     contentGroup:SetWidth(width)
+    contentGroup:SetLayout("List")
 
     InterfaceOptions_AddCategory(frame)
 
@@ -47,6 +48,22 @@ end
 
 local function makeLootListImporterFrame()
     local contentGroup = makeFrame("Loot List Importer")
+
+    local howTo = AceGUI:Create("Heading")
+    howTo:SetText("HOW TO")
+    contentGroup:AddChild(howTo)
+
+    local function instruct(txt)
+        local step = AceGUI:Create("Label")
+        step:SetText(txt)
+        contentGroup:AddChild(step)
+    end
+
+    instruct("- Download the master loot list (e.g.: 'MC Loot' tab on spreadsheet)")
+    instruct("-- Open the tab, then 'File -> Download -> Tab-separated Values (.tsv, current sheet)'")
+    instruct("- Open the downloaded file in Notepad or some text editor (NOT EXCEL!)")
+    instruct("- Copy the contents of that file and paste them in to the below box, then press 'Import'")
+
     local editBox = AceGUI:Create("MultiLineEditBox")
     editBox:SetLabel("Import String")
     editBox:SetNumLines(20)
