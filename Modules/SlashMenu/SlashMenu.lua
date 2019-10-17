@@ -6,33 +6,33 @@ if not OSAddon.SlashMenu then
 	OSAddon.SlashMenu = {}
 end
 
-local frameMain = CreateFrame("Frame", nil, UIParent)
-frameMain.anchor = CreateFrame("Frame", nil, frameMain)
-frameMain.anchor:SetPoint("TOPLEFT", 32, -16)
-frameMain.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
-frameMain.title = frameMain:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-frameMain.title:SetPoint("TOPLEFT", 18, -16)
-frameMain.title:SetText(format("%s |cff33eeff%s|r", addonName, "General"))
-frameMain.name = addonName
+local function makeFrame(name, excludeParent)
+    local frame = CreateFrame("Frame", nil, UIParent)
+    frame.anchor = CreateFrame("Frame", nil, frameLootListImport)
+    frame.anchor:SetPoint("TOPLEFT", 32, -16)
+    frame.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
+    frame.title = frameLootListImporter:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    frame.title:SetPoint("TOPLEFT", 18, -16)
+    frame.title:SetText(format("%s |cff33eeff%s|r", addonName, name))
+    if not excludeParent then
+        frame.parent = addonName
+    end
+    frame.name = name
+    return frame
+end
 
-local frameLoot = CreateFrame("Frame", nil, UIParent)
-frameLoot.anchor = CreateFrame("Frame", nil, frameLoot)
-frameLoot.anchor:SetPoint("TOPLEFT", 32, -13)
-frameLoot.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
-frameLoot.title = frameLoot:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-frameLoot.title:SetPoint("TOPLEFT", 18, -16)
-frameLoot.title:SetText(format("%s |cff33eeff%s|r", addonName, "Loot"))
-frameLoot.parent = addonName
-frameLoot.name = "Loot"
+local frameMain = makeFrame(addonName, true)
+
+local frameLootListImporter = makeFrame("Loot List Importer")
 
 local function setupSlashMenu()
     InterfaceOptions_AddCategory(frameMain)
-    InterfaceOptions_AddCategory(frameLoot)
+    InterfaceOptions_AddCategory(frameLootListImporter)
 end
 
 function OnslaughtAce:OpenSlashMenuOptions(input)
-    InterfaceOptionsFrame_OpenToCategory(frameLoot)
-    InterfaceOptionsFrame_OpenToCategory(frameLoot)
+    InterfaceOptionsFrame_OpenToCategory(frameLootListImporter)
+    InterfaceOptionsFrame_OpenToCategory(frameLootListImporter)
     InterfaceOptionsFrame_OpenToCategory(frameMain)
 end
 
