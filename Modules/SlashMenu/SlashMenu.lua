@@ -89,9 +89,9 @@ local function makeLootListImporterFrame()
         local items = OSAddon.lib.parseLootTSV(lootText)
         local importOkay = OSAddon.LootManager.importItems(items)
         if importOkay then
-            statusText.SetText("Success!")
+            statusText:SetText("Success!")
         else
-            statusText.SetText("An error occurred. Try again or contact an admin")
+            statusText:SetText("An error occurred. Try again or contact an admin")
         end
         importButton:SetDisabled(false)
     end)

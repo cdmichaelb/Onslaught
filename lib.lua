@@ -24,7 +24,7 @@ OSAddon.lib.dump = function(o)
        local s = '{ '
        for k,v in pairs(o) do
           if type(k) ~= 'number' then k = '"'..k..'"' end
-          s = s .. '['..k..'] = ' .. dump(v) .. ','
+          s = s .. '['..k..'] = ' .. OSAddon.lib.dump(v) .. ','
        end
        return s .. '} '
     else
@@ -48,10 +48,10 @@ end
     local lines = split(lootString, "\n")
     for i = 1, #lines do
         local str = lines[i]
-        str = string.gsub(str, "^\t+", "")
-        str = string.gsub(str, "\t\t+", "\t")
+        str = string.gsub(str, "^%s+", "")
+        str = string.gsub(str, "%s%s+", "  ")
         if string.match(str, "^(.+(%a+): (%d+).+)") then
-            local data = split(str, "\t")
+            local data = split(str, "%s%s")
             local item = data[1]
             items[item] = {}
             for l = 2, #data do
