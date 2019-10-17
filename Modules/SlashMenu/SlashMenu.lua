@@ -1,53 +1,40 @@
 local OS, OSAddon = ...
 
+local addonName = "ONSLAUGHT"
+
 if not OSAddon.SlashMenu then
 	OSAddon.SlashMenu = {}
 end
 
-local function makeBody()
-    local history = OSAddon.LootAlerts.getHistory()
-    local body = ""
-    local s = function(v) return "\"" .. v .. "\"" end
-    for i = 1, #history do
-        local values = history[i]
-        body = body .. strjoin(",", s(values.time), s(values.player), s(values.item)) .. "\n"
-    end
-    return body
+local frameMain = CreateFrame("Frame", nil, UIParent)
+frameMain.anchor = CreateFrame("Frame", nil, frameMain)
+frameMain.anchor:SetPoint("TOPLEFT", 32, -16)
+frameMain.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
+frameMain.title = frameMain:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+frameMain.title:SetPoint("TOPLEFT", 18, -16)
+frameMain.title:SetText(format("%s |cff33eeff%s|r", addonName, "General"))
+frameMain.name = addonName
+
+local frameLoot = CreateFrame("Frame", nil, UIParent)
+frameLoot.anchor = CreateFrame("Frame", nil, frameLoot)
+frameLoot.anchor:SetPoint("TOPLEFT", 32, -13)
+frameLoot.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
+frameLoot.title = frameLoot:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+frameLoot.title:SetPoint("TOPLEFT", 18, -16)
+frameLoot.title:SetText(format("%s |cff33eeff%s|r", addonName, "Loot"))
+frameLoot.parent = addonName
+frameLoot.name = "Loot"
+
+local function setupSlashMenu()
+    InterfaceOptions_AddCategory(frame)
+    InterfaceOptions_AddCategory(frameLoot)
 end
 
-local function showMenu()
-    local menu = AceGUI:Create("Window")
-    menu:SetLayout("List")
-    menu:SetTitle("ONSLAUGHT")
-    menu:SetCallback("OnClose", function(widget) AceGUI:Release(widget) end)
-
-    local editbox = AceGUI:Create("MultiLineEditBox")
-    editbox:SetNumLines(25)
-    editbox:SetText(makeBody())
-    editbox:SetFullWidth(true)
-    editbox:SetFullHeight(true)
-    editbox:DisableButton(true)
-    menu:AddChild(editbox)
-
-    local buttonGroup = AceGUI:Create("SimpleGroup")
-    buttonGroup:SetLayout("Flow")
-    local selectAllButton = AceGUI:Create("Button")
-    selectAllButton:SetText("Select All (Ctrl-C)")
-    selectAllButton:SetCallback("OnClick", function()
-        editbox:HighlightText()
-        editbox:SetFocus()
-    end)
-    buttonGroup:AddChild(selectAllButton)
-    local clearButton = AceGUI:Create("Button")
-    clearButton:SetText("Clear Data")
-    clearButton:SetCallback("OnClick", function()
-        editbox:SetText("")
-        OSAddon.LootAlerts.resetHistory()
-    end)
-    buttonGroup:AddChild(clearButton)
-    menu:AddChild(buttonGroup)
+OnslaughtAce:OpenSlashMenuOptions = function()
+    InterfaceOptionsFrame_OpenToCategory(frame)
 end
 
 OSAddon.SlashMenu.init = function()
-    OnslaughtAce:RegisterChatCommand("onslaught", OSAddon.SlashMenu.showMenu)
+    OnslaughtAce:RegisterChatCommand("onslaught", "OpenSlashMenuOptions")
+    setupSlashMenu()
 end
