@@ -43,7 +43,19 @@ end
 
 local frameMain = nil
 local function makeMainFrame()
-    _, _, frameMain = makeFrame("General", true)
+    local contentGroup = nil
+    contentGroup, _, frameMain = makeFrame("General", true)
+
+    local logLootEnabled = AceGUI:Create("CheckBox")
+    logLootEnabled:SetLabel("Log loot history in raids?")
+    logLootEnabled:SetDescription("Checking this will listen for alerts from others when they receive loot. Only check this if you want a full history, and make sure you regularly clean the cache.")
+    logLootEnabled:SetType("checkbox")
+    logLootEnabled:SetValue(OnslaughtAddonGlobalDB.LootAlerts.config.logLoot)
+    logLootEnabled:SetCallback("OnValueChanged", function(value)
+        print(value)
+        OnslaughtAddonGlobalDB.LootAlerts.config.logLoot = value
+    end)
+    contentGroup:AddChild(logLootEnabled)
 end
 
 local function makeLootListImporterFrame()

@@ -85,11 +85,10 @@ end
 
 OSAddon.LootAlerts.init = function()
     if not OnslaughtAddonGlobalDB.LootAlerts then
-        OnslaughtAddonGlobalDB.LootAlerts = {
-            config = {
-                logLoot = false
-            }
-        }
+        OnslaughtAddonGlobalDB.LootAlerts = {}
+    end
+    if not OnslaughtAddonGlobalDB.LootAlerts.config then
+        OnslaughtAddonGlobalDB.LootAlerts.config = { logLoot = false }
     end
     if not OnslaughtAddonGlobalDB.LootAlerts.history then
         OnslaughtAddonGlobalDB.LootAlerts.history = {}
