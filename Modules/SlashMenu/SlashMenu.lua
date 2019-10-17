@@ -31,6 +31,8 @@ local function setupSlashMenu()
 end
 
 function OnslaughtAce:OpenSlashMenuOptions(input)
+    InterfaceOptionsFrame_OpenToCategory(frameLoot)
+    InterfaceOptionsFrame_OpenToCategory(frameLoot)
     InterfaceOptionsFrame_OpenToCategory(frameMain)
 end
 
