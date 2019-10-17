@@ -22,27 +22,36 @@ local function makeFrame(name, excludeParent)
     local contentFrame = CreateFrame("Frame", nil, frame)
     contentFrame:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-32, InterfaceOptionsFramePanelContainer:GetWidth()-64)
     contentFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -48)
-    local instanceTrackerFrameBackground = contentFrame:CreateTexture()
-    instanceTrackerFrameBackground:SetAllPoints(contentFrame)
+
+    local contentGroup = AceGUI:Create("SimpleGroup")
+    contentGroup.frame.SetParent(contentFrame)
+    contentGroup.frame.SetPoint("TOPLEFT", contentFrame)
+    contentGroup.frame:Show()
+    contentGroup:SetFullHeight(true)
+    contentGroup:SetFullWidth(true)
+
+    local instanceTrackerFrameBackground = contentGroup.frame:CreateTexture()
+    instanceTrackerFrameBackground:SetAllPoints(contentGroup.frame)
     instanceTrackerFrameBackground:SetColorTexture(1, 0, 0)
-    contentFrame.texture = instanceTrackerFrameBackground
+    contentGroup.frame.texture = instanceTrackerFrameBackground
 
     InterfaceOptions_AddCategory(frame)
 
-    return contentFrame, frame
+    return contentGroup, contentFrame, frame
 end
 
 local frameMain = nil
 local function makeMainFrame()
-    _, frameMain = makeFrame("General", true)
+    _, _, frameMain = makeFrame("General", true)
 end
 
 local function makeLootListImporterFrame()
-    local contentFrame = makeFrame("Loot List Importer")
+    local contentGroup = makeFrame("Loot List Importer")
     local editBox = AceGUI:Create("MultiLineEditBox")
-    editBox.frame.parent = contentFrame
+    editBox.SetLabel("Import String")
     editBox:SetNumLines(20)
-    editBox:Show()
+    editBox:SetFullWidth(true)
+    contentGroup:AddChild(editBox)
 end
 
 local function setupSlashMenu()
