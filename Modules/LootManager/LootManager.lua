@@ -126,6 +126,5 @@ OSAddon.LootManager.importItems = function(items)
     table.foreach(items, function(item, players)
         OnslaughtAddonGlobalDB.LootManager.distribution[item] = players
     end)
-    print(OSAddon.lib.dump(OnslaughtAddonGlobalDB.LootManager.distribution))
     return true
 end
