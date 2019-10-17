@@ -49,12 +49,11 @@ end
     for i = 1, #lines do
         local str = lines[i]
         str = string.gsub(str, "^%s+", "")
-        str = string.gsub(str, "%s%s+", "  ")
-        if string.match(str, "^(.+(%a+): (%d+).+)") then
-            local data = split(str, "%s%s")
+        if string.match(str, "^(.*(%a+): (%d+).*)") then
+            local data = split(str.."  ", "%s%s+")
             local item = data[1]
             items[item] = {}
-            for l = 2, #data do
+            for l = 1, #data do
                 local details = data[l]
                 if string.match(details, "^(%a+): (%d+)") then
                     local nameScore = split(details, ": ")
