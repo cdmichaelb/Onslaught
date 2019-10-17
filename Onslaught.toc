@@ -12,6 +12,7 @@ lib.lua
 
 Modules/LootAlerts/LootAlerts.lua
 Modules/LootManager/LootManager.lua
+
 Modules/SlashMenu/SlashMenu.lua
 
 main.lua

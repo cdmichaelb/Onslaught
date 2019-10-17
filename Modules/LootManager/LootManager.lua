@@ -121,3 +121,13 @@ OSAddon.LootManager.init = function()
     -- }
     -- handleLootOpened(testLootData, testDistribution, testRoster)
 end
+
+OSAddon.LootManager.importItems = function(items)
+    print("importing items")
+    table.foreach(items, function(item, players)
+        OnslaughtAddonGlobalDB.LootManager.distribution[item] = players
+    end)
+    print("finished")
+    print(OSAddon.lib.dump(OnslaughtAddonGlobalDB.LootManager.distribution))
+    return true
+end

@@ -80,10 +80,20 @@ local function makeLootListImporterFrame()
     local importButton = AceGUI:Create("Button")
     importButton:SetText("Import")
     importButton:SetCallback("OnClick", function()
-        self:SetDisabled(true)
+        importButton:SetDisabled(true)
         statusText:SetText("Importing... please wait")
         statusText.frame:Show()
+
+        local lootText = editBox:GetText("")
         editBox:SetText("")
+        local items = OSAddon.lib.parseLootTSV(lootText)
+        local importOkay = OSAddon.LootManager.importItems(items)
+        if importOkay then
+            statusText.SetText("Success!")
+        else
+            statusText.SetText("An error occurred. Try again or contact an admin")
+        end
+        importButton:SetDisabled(false)
     end)
     statusGroup:AddChild(importButton)
     statusGroup:AddChild(statusText)
