@@ -33,9 +33,21 @@ local function makeFrame(name, excludeParent)
 end
 
 local frameMain = nil
-local function setupSlashMenu()
+local function makeMainFrame()
     _, frameMain = makeFrame("General", true)
-    makeFrame("Loot List Importer")
+end
+
+local function makeLootListImporterFrame()
+    local contentFrame = makeFrame("Loot List Importer")
+    local editBox = AceGUI:Create("MultiLineEditBox")
+    editBox.frame.parent = contentFrame
+    editBox:SetNumLines(20)
+    editBox:Show()
+end
+
+local function setupSlashMenu()
+    makeMainFrame()
+    makeLootListImporterFrame()
 end
 
 function OnslaughtAce:OpenSlashMenuOptions(input)
