@@ -109,15 +109,15 @@ OSAddon.LootManager.init = function()
         OnslaughtAddonGlobalDB.LootManager.distribution = {}
     end
     startLootManager()
-    -- testing
-    local testLootData = {
-        { item = "Test Item", quality = 4, texture = "", quantity = 1 }
-    }
-    local testDistribution = {
-        "Test Item" = { name = "Dw", score = 40 }
-    }
-    local testRoster = {
-        "Dw" = { name = "Dw", isMasterLooter = true }
-    }
-    handleLootOpened(testLootData, testDistribution, testRoster)
+    -- -- testing
+    -- local testLootData = {
+    --     { item = "Test Item", quality = 4, texture = "", quantity = 1 }
+    -- }
+    -- local testDistribution = {
+    --     "Test Item" = { name = "Dw", score = 40 }
+    -- }
+    -- local testRoster = {
+    --     "Dw" = { name = "Dw", isMasterLooter = true }
+    -- }
+    -- handleLootOpened(testLootData, testDistribution, testRoster)
 end
