@@ -8,7 +8,7 @@ end
 
 local function makeFrame(name, excludeParent)
     local frame = CreateFrame("Frame", nil, UIParent)
-    frame.anchor = CreateFrame("Frame", nil, frameLootListImport)
+    frame.anchor = CreateFrame("Frame", nil, frame)
     frame.anchor:SetPoint("TOPLEFT", 32, -16)
     frame.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
     frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
@@ -19,18 +19,20 @@ local function makeFrame(name, excludeParent)
     end
     frame.name = name
 
-    local contentFrame = AceGUI:Create("SimpleGroup")
+    local contentFrame = AceGUI:Create("Frame")
+    contentFrame.frame.SetParent(frame)
     contentFrame:SetFullHeight(true)
     contentFrame:SetFullWidth(true)
-    contentFrame:SetPoint("TOPLEFT", frame, 0, -32)
+    contentFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -32)
     local instanceTrackerFrameBackground = contentFrame.frame:CreateTexture()
     instanceTrackerFrameBackground:SetAllPoints(contentFrame.frame)
     instanceTrackerFrameBackground:SetColorTexture(1, 0, 0)
     contentFrame.frame.texture = instanceTrackerFrameBackground
+
     return frame
 end
 
-local frameMain = makeFrame(addonName, true)
+local frameMain = makeFrame("General", true)
 
 local frameLootListImporter = makeFrame("Loot List Importer")
 
