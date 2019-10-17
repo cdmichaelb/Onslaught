@@ -46,9 +46,8 @@ local function makeMainFrame()
     _, _, frameMain = makeFrame("General", true)
 end
 
-local frameLootListImporter = nil
 local function makeLootListImporterFrame()
-    local contentGroup, _, frameLootListImporter = makeFrame("Loot List Importer")
+    local contentGroup = makeFrame("Loot List Importer")
 
     local howTo = AceGUI:Create("Heading")
     howTo:SetText("HOW TO")
@@ -74,11 +73,21 @@ local function makeLootListImporterFrame()
     editBox:DisableButton(true)
     contentGroup:AddChild(editBox)
 
+    local statusGroup = AceGUI:Create("SimpleGroup")
+    statusGroup:SetLayout("Flow")
+    local statusText = AceGUI:Create("Label")
+    statusText.frame:Hide()
     local importButton = AceGUI:Create("Button")
     importButton:SetText("Import")
     importButton:SetCallback("OnClick", function()
-        print("Imported")
+        self:SetDisabled(true)
+        statusText:SetText("Importing... please wait")
+        statusText.frame:Show()
+        editBox:SetText("")
     end)
+    statusGroup:AddChild(importButton)
+    statusGroup:AddChild(statusText)
+    contentGroup:AddChild(statusGroup)
 end
 
 local function setupSlashMenu()
@@ -87,8 +96,8 @@ local function setupSlashMenu()
 end
 
 function OnslaughtAce:OpenSlashMenuOptions(input)
-    InterfaceOptionsFrame_OpenToCategory(frameLootListImporter)
-    InterfaceOptionsFrame_OpenToCategory(frameLootListImporter)
+    InterfaceOptionsFrame_OpenToCategory("Loot List Importer")
+    InterfaceOptionsFrame_OpenToCategory("Loot List Importer")
     InterfaceOptionsFrame_OpenToCategory(frameMain)
 end
 
