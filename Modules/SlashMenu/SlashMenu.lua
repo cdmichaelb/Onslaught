@@ -46,16 +46,19 @@ local function makeMainFrame()
     _, _, frameMain = makeFrame("General", true)
 end
 
+local frameLootListImporter = nil
 local function makeLootListImporterFrame()
-    local contentGroup = makeFrame("Loot List Importer")
+    local contentGroup, _, frameLootListImporter = makeFrame("Loot List Importer")
 
     local howTo = AceGUI:Create("Heading")
     howTo:SetText("HOW TO")
+    howTo:SetFullWidth(true)
     contentGroup:AddChild(howTo)
 
     local function instruct(txt)
         local step = AceGUI:Create("Label")
         step:SetText(txt)
+        step:SetFullWidth(true)
         contentGroup:AddChild(step)
     end
 
@@ -65,10 +68,17 @@ local function makeLootListImporterFrame()
     instruct("- Copy the contents of that file and paste them in to the below box, then press 'Import'")
 
     local editBox = AceGUI:Create("MultiLineEditBox")
-    editBox:SetLabel("Import String")
+    editBox:SetLabel("")
     editBox:SetNumLines(20)
     editBox:SetFullWidth(true)
+    editBox:DisableButton(true)
     contentGroup:AddChild(editBox)
+
+    local importButton = AceGUI:Create("Button")
+    importButton:SetText("Import")
+    importButton:SetCallback("OnClick", function()
+        print("Imported")
+    end)
 end
 
 local function setupSlashMenu()
@@ -77,8 +87,8 @@ local function setupSlashMenu()
 end
 
 function OnslaughtAce:OpenSlashMenuOptions(input)
-    InterfaceOptionsFrame_OpenToCategory(frameMain)
-    InterfaceOptionsFrame_OpenToCategory(frameMain)
+    InterfaceOptionsFrame_OpenToCategory(frameLootListImporter)
+    InterfaceOptionsFrame_OpenToCategory(frameLootListImporter)
     InterfaceOptionsFrame_OpenToCategory(frameMain)
 end
 
