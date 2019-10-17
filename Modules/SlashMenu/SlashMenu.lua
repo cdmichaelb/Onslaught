@@ -11,7 +11,7 @@ local function makeFrame(name, excludeParent)
     frame.anchor = CreateFrame("Frame", nil, frameLootListImport)
     frame.anchor:SetPoint("TOPLEFT", 32, -16)
     frame.anchor:SetSize(InterfaceOptionsFramePanelContainer:GetWidth()-64, 1)
-    frame.title = frameLootListImporter:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    frame.title = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     frame.title:SetPoint("TOPLEFT", 18, -16)
     frame.title:SetText(format("%s |cff33eeff%s|r", addonName, name))
     if not excludeParent then
