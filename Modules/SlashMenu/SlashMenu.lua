@@ -26,12 +26,12 @@ frameLoot.parent = addonName
 frameLoot.name = "Loot"
 
 local function setupSlashMenu()
-    InterfaceOptions_AddCategory(frame)
+    InterfaceOptions_AddCategory(frameMain)
     InterfaceOptions_AddCategory(frameLoot)
 end
 
 function OnslaughtAce:OpenSlashMenuOptions(input)
-    InterfaceOptionsFrame_OpenToCategory(frame)
+    InterfaceOptionsFrame_OpenToCategory(frameMain)
 end
 
 OSAddon.SlashMenu.init = function()
