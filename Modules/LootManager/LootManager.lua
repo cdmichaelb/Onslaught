@@ -11,7 +11,7 @@ lootWindow:SetLayout("List")
 lootWindow:SetTitle("ONSLAUGHT LOOT")
 lootWindow:SetCallback("OnClose", function() lootWindow:Hide() end)
 lootWindow:EnableResize(false)
-lootWindow:SetWidth(620)
+lootWindow:SetWidth(700)
 lootWindow:Hide()
 
 local function drawLootGroup(item, quality, texture, quantity, namesInRoster)
@@ -48,12 +48,12 @@ local function drawLootGroup(item, quality, texture, quantity, namesInRoster)
     end
 
     if #namesInRoster > 0 then
-        for i = 1, 4 do
+        for i = 1, 5 do
             local player = namesInRoster[i]
             if player then
                 local nameLabel = AceGUI:Create("Label")
                 nameLabel:SetText(player.name .. " (" .. player.score .. ")")
-                nameLabel:SetRelativeWidth(0.15)
+                nameLabel:SetRelativeWidth(0.12)
                 lootGroup:AddChild(nameLabel)
             end
         end
@@ -65,23 +65,22 @@ end
 local function handleLootOpened(lootData, distribution, roster)
     lootWindow:ReleaseChildren()
     local count = 0
-    table.foreach(lootData, function(k,v)
+    table.foreach(lootData, function(k, v)
         if distribution[v.item] then
             count = count + 1
             local namesInRoster = {}
-            for i = 1, #distribution[v.item] do
-                local player = #distribution[v.item]
+            table.foreach(distribution[v.item], function(kk, player)
                 if roster[player.name] then
                     table.insert(namesInRoster, player)
                 end
-            end
+            end)
             drawLootGroup(v.item, v.quality, v.texture, v.quantity, namesInRoster)
         end
     end)
     if count == 0 then
         return
     end
-    lootWindow:SetHeight(40 + (54 * count))
+    lootWindow:SetHeight(40 + (40 * count))
     lootWindow:Show()
     lootWindow:DoLayout()
 end
@@ -92,7 +91,8 @@ local function startLootManager()
     frame:SetScript("OnEvent", function(self, event)
         if event == "LOOT_OPENED" then
             local roster = OSAddon.lib.getRosterInfo()
-            if not roster[UnitName("player")].isMasterLooter then return end
+            if not roster[UnitName("player")] then return end
+            -- if not roster[UnitName("player")].isMasterLooter then return end
             local lootData = GetLootInfo()
             if #lootData == 0 then return end
             handleLootOpened(lootData, OnslaughtAddonGlobalDB.LootManager.distribution, roster)
@@ -109,16 +109,29 @@ OSAddon.LootManager.init = function()
         OnslaughtAddonGlobalDB.LootManager.distribution = {}
     end
     startLootManager()
-    -- -- testing
+    -- testing
     -- local testLootData = {
-    --     { item = "Test Item", quality = 4, texture = "", quantity = 1 }
+    --     { item = "Ashkandi, Great Sword of the Brotherhood", quality = 4, texture = "interface/icons/inv_sword_50.blp", quantity = 1 },
+    --     { item = "Test Item", quality = 4, texture = "interface/icons/inv_sword_50.blp", quantity = 1 },
+    --     { item = "Test Item 2", quality = 4, texture = "interface/icons/inv_sword_50.blp", quantity = 1 }
     -- }
-    -- local testDistribution = {
-    --     "Test Item" = { name = "Dw", score = 40 }
-    -- }
-    -- local testRoster = {
-    --     "Dw" = { name = "Dw", isMasterLooter = true }
-    -- }
+    -- local testDistribution = {}
+    -- testDistribution["Ashkandi, Great Sword of the Brotherhood"] = {}
+    -- testDistribution["Test Item"] = {}
+    -- testDistribution["Test Item 2"] = {}
+    -- table.insert(testDistribution["Test Item"], { name = "Dw", score = 40 })
+    -- table.insert(testDistribution["Test Item"], { name = "Cleavis", score = 40 })
+    -- table.insert(testDistribution["Test Item"], { name = "Cleavis", score = 40 })
+    -- table.insert(testDistribution["Test Item"], { name = "Dw", score = 40 })
+    -- table.insert(testDistribution["Test Item"], { name = "Dw", score = 40 })
+    -- table.insert(testDistribution["Test Item"], { name = "Dw", score = 40 })
+    -- table.insert(testDistribution["Test Item"], { name = "Dw", score = 40 })
+    -- table.insert(testDistribution["Test Item"], { name = "Dw", score = 40 })
+    -- table.insert(testDistribution["Test Item"], { name = "Dw", score = 40 })
+    -- table.insert(testDistribution["Ashkandi, Great Sword of the Brotherhood"], { name = "Dw", score = 40 })
+    -- local testRoster = {}
+    -- testRoster["Dw"] = { name = "Dw", isMasterLooter = true }
+    -- testRoster["Cleavis"] = { name = "Cleavis", isMasterLooter = false }
     -- handleLootOpened(testLootData, testDistribution, testRoster)
 end
 
